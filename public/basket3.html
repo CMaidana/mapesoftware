@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basketball Statistics</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .inputContainer {
+      padding-right: 0px;
+    }
+    .buttonContainer {
+      padding-left: 0px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <label for="game" class="col-sm-8 col-form-label">Partido:</label>      
+      <div class="col-sm-8 inputContainer">
+        <input type="text" id="game" name="game" class="form-control" value="" placeholder="Peñarol vs ...">
+      </div>
+    </div>
+    <div class="row" style="display:none">
+      <label for="stats" class="col-sm-8 col-form-label">Estadisticas:</label>      
+      <div class="col-sm-8 inputContainer">
+        <textarea type="text" id="stats" name="stats" class="form-control" value=""></textarea>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <form id="fieldsForm" class="container">
+      </form>
+    </div>
+    <div class="row" id="downloadStatsRow">
+      <button id="downloadStats" class="btn btn-primary">Descargar Stats</button>
+    </div>
+  </div>
+  <template id="templateField">
+    <div class="form-group row">
+      <label for="points" class="col-sm-12 col-form-label">Points:</label> 
+    </div>
+    <div class="form-group row">     
+      <div class="col-sm-8 inputContainer">
+        <input type="number" id="points" name="points" class="form-control" value="0" readonly>
+      </div>
+      <div class="col-sm-4 buttonContainer">
+        <div class="btn-group">
+          <button class="btn btn-primary incrementButton form-control" type="button">+</button>
+          <button class="btn btn-primary decrementButton form-control" type="button">-</button>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+
+    const fieldGenerator = (fieldName) => {
+      const fieldId = fieldName.replace(/[^a-z0-9]/gi, '').toLowerCase();
+      const template = document.getElementById('templateField');
+      const element = template.content.cloneNode(true);
+
+      const label = element.querySelector('label');
+      const incrementButton = element.querySelector('.incrementButton');
+      const decrementButton = element.querySelector('.decrementButton');
+      const input = element.querySelector('input');
+
+      label.textContent = fieldName;
+      label.for = fieldId;
+      incrementButton.addEventListener('click', evt => increment(fieldId));
+      decrementButton.addEventListener('click', evt => decrement(fieldId));
+
+      input.id = input.name = fieldId;
+
+      document.getElementById('fieldsForm').appendChild(element);
+    };
+		function increment(id) {
+			var input = document.getElementById(id);
+			input.value = parseInt(input.value) + 1;
+		}
+
+		function decrement(id) {
+			var input = document.getElementById(id);
+			if (parseInt(input.value) > 0) {
+				input.value = parseInt(input.value) - 1;
+			}
+		}
+
+    window.onload = _ => {
+      const fields = [
+        "Puntos", 
+        "Rebotes Defensivos",
+        "Rebotes Ofensivos",
+        "Asistencias",
+        "Recuperos",
+        "Bloqueos",
+        "Faltas",
+        "Faltas recibidas",
+        "Perdidas",
+        "FT intentados",
+        "FT acertados",
+        "2pt intentados",
+        "2pt acertados",
+        "3pt intentados",
+        "3pt acertados",
+      ];
+
+      const stats = document.getElementById('stats');
+      stats.value = fields.join(', ');
+
+      fields.forEach((field) => fieldGenerator(field));
+      
+      document.getElementById('fieldsForm').appendChild(document.getElementById('downloadStatsRow'));
+    }
+  </script>
+</body>
+</html>
