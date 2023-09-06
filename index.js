@@ -14,8 +14,8 @@ app.get('/', (req, res) => {
 });
 
 // Define a route to serve the landing page
-app.get('/bulma', (req, res) => {
-  res.sendFile(__dirname + '/public/index_bulma.html');
+app.get('/old', (req, res) => {
+  res.sendFile(__dirname + '/public/index_old.html');
 });
 
 // Define a route to serve the landing page
