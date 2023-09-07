@@ -141,3 +141,14 @@ svg {
   background-size: cover;
   min-height: 300px;
 }
+
+.text-animated {
+  transition: all 1s;
+  transform-origin: 50% 50%;
+  transition-timing-function: ease-in;
+  opacity: 0;
+}
+
+.text-animated-displayed {
+  opacity: 1;
+}

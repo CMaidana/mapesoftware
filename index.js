@@ -14,6 +14,11 @@ app.get('/', (req, res) => {
 });
 
 // Define a route to serve the landing page
+app.get('/en', (req, res) => {
+  res.sendFile(__dirname + '/public/index.en.html');
+});
+
+// Define a route to serve the landing page
 app.get('/old', (req, res) => {
   res.sendFile(__dirname + '/public/index_old.html');
 });

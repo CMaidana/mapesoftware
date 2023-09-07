@@ -33,8 +33,19 @@ window.addEventListener('DOMContentLoaded', event => {
         if (id && top >= (offset - 80) && top < offset + height) {
           const target = document.querySelector(`[href='#${id}']`);
           activeLinks(target);
+          scrollParagraphControl(sec);
         }
       });
+  }
+
+  const scrollParagraphControl = (section) => {
+    const animatedClassName = 'text-animated-displayed';
+    const texts = section.getElementsByClassName('text-animated');
+    Array.from(texts).forEach((text) => {
+      if (!text.classList.contains(animatedClassName)) {
+        text.classList.add(animatedClassName);
+      }
+    });
   }
 
   // Shrink the navbar 
